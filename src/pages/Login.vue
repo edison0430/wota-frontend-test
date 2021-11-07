@@ -7,9 +7,20 @@
             <q-icon name="person" />
           </template>
         </q-input>
-        <q-input v-model="password" type="password" label="密碼">
+        <q-input
+          v-model="password"
+          :type="isPwd ? 'password' : 'text'"
+          label="密碼"
+        >
           <template v-slot:prepend>
             <q-icon name="lock" />
+          </template>
+          <template v-slot:append>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
           </template>
         </q-input>
       </q-card-section>
@@ -48,6 +59,7 @@ const router = useRouter();
 
 const username = ref('');
 const password = ref('');
+const isPwd = ref(true);
 
 async function login() {
   if (username.value === '' || password.value === '') {
