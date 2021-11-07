@@ -29,9 +29,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _, next) => {
-  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+  if (to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
     next('/login');
-  } else if (to.meta.requireUnauth && store.getters.isAuthenticated) {
+  } else if (to.meta.requireUnauth && store.getters['auth/isAuthenticated']) {
     next('/order');
   } else {
     next();

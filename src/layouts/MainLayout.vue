@@ -22,7 +22,7 @@ const store = useStore();
 const router = useRouter();
 
 function logout() {
-  store.dispatch('logout');
+  store.dispatch('auth/logout');
   router.push('/login');
 }
 </script>

@@ -63,7 +63,7 @@ async function login() {
       username: username.value,
       password: password.value,
     };
-    await store.dispatch('login', actionPayload);
+    await store.dispatch('auth/login', actionPayload);
     router.push('/order');
   } catch (error) {
     let message = error.response?.data?.error || error.message;
