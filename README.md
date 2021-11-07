@@ -1,7 +1,9 @@
-# Vue 3 + Vite
+# Wota Frontend Test
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+此專案為 Wota 面試前測作業，實作的功能包含登入及訂單查詢
 
-## Recommended IDE Setup
+[API Docs](https://dev.tapgo.cc/test/swagger-ui.html)
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+### 專案環境說明
+
+主要透過 Vue3 + Vite + Quasar 達成
