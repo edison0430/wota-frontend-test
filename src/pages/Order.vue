@@ -69,12 +69,114 @@
       :rows="rows.data"
       :columns="columns"
       row-key="name"
-    />
+      v-model:pagination="pagination"
+    >
+      <template v-slot:top="scope">
+        <PaginationComponent
+          v-model:pages="pagination"
+          :fitstPage="scope.firstPage"
+        >
+          <div>
+            <q-btn
+              v-if="scope.pagesNumber > 2"
+              icon="first_page"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isFirstPage"
+              @click="scope.firstPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 1"
+              icon="chevron_left"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isFirstPage"
+              @click="scope.prevPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 1"
+              icon="chevron_right"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isLastPage"
+              @click="scope.nextPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 2"
+              icon="last_page"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isLastPage"
+              @click="scope.lastPage"
+            />
+          </div>
+        </PaginationComponent>
+      </template>
+      <template v-slot:bottom="scope">
+        <PaginationComponent
+          v-model:pages="pagination"
+          :fitstPage="scope.firstPage"
+        >
+          <div>
+            <q-btn
+              v-if="scope.pagesNumber > 2"
+              icon="first_page"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isFirstPage"
+              @click="scope.firstPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 1"
+              icon="chevron_left"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isFirstPage"
+              @click="scope.prevPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 1"
+              icon="chevron_right"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isLastPage"
+              @click="scope.nextPage"
+            />
+            <q-btn
+              v-if="scope.pagesNumber > 2"
+              icon="last_page"
+              color="grey-8"
+              round
+              dense
+              flat
+              :disable="scope.isLastPage"
+              @click="scope.lastPage"
+            />
+          </div>
+        </PaginationComponent>
+      </template>
+    </q-table>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue';
+
+import PaginationComponent from '../components/Pagination.vue';
 import { apiFetchOrder } from '../api/order';
 
 const columns = [
@@ -168,10 +270,20 @@ const filter = reactive({
   fulfillment_status: null,
 });
 
+const pagination = ref({
+  sortBy: 'desc',
+  descending: false,
+  page: 1,
+  rowsPerPage: 5,
+  rowNumber: 0,
+});
+
 const isSearched = ref(false);
 
 async function fetch() {
-  const params = {};
+  const params = {
+    size: 9999,
+  };
 
   for (const key in filter) {
     if (filter[key] instanceof Array) {
@@ -188,6 +300,7 @@ async function fetch() {
   const response = await apiFetchOrder(params);
   const responseData = response.data;
   rows.data = [...responseData.content];
+  pagination.value.rowNumber = responseData.total_elements;
   isSearched.value = true;
 }
 </script>
